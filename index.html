@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Post Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.5;
+        }
+        label, input, textarea, button {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .output-container {
+            margin-top: 20px;
+        }
+        .output {
+            white-space: pre-wrap;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .copy-button {
+            background-color: #007BFF;
+            color: white;
+        }
+        .copy-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Job Post Generator</h1>
+    <label for="company">Company Name:</label>
+    <input type="text" id="company" placeholder="Enter company name">
+
+    <label for="jobTitle">Job Title:</label>
+    <input type="text" id="jobTitle" placeholder="Enter job title">
+
+    <label for="batch">Batch:</label>
+    <input type="text" id="batch" placeholder="Enter batch (e.g., 2025 & before)">
+
+    <label for="applyLink">Apply Link:</label>
+    <input type="url" id="applyLink" placeholder="Enter apply link">
+
+    <button onclick="generatePost()">Generate Post</button>
+    <button class="copy-button" onclick="copyToClipboard()">Copy</button>
+
+    <div class="output-container">
+        <div class="output" id="output" contenteditable="true"></div>
+    </div>
+
+    <script>
+        function generatePost() {
+            const company = document.getElementById("company").value;
+            const jobTitle = document.getElementById("jobTitle").value;
+            const batch = document.getElementById("batch").value;
+            const applyLink = document.getElementById("applyLink").value;
+
+            const post = `*Company*: ${company}
+
+🛄 *Job Title*: ${jobTitle}
+
+👨‍🎓 *Batch*: ${batch}
+
+➡ *Apply*: ${applyLink}
+
+🔊 *WhatsApp Channel*: https://whatsapp.com/channel/0029VaITGBX3AzNRgmw8YF3T
+
+> Please do share in your college groups. In case you are applying, please react to this post 😇❤
+
+╭════════✧═════════╮
+ 🔷  Kowshiq's Community 🔶
+╰════════✧═════════╯`;
+
+            document.getElementById("output").textContent = post;
+        }
+
+        function copyToClipboard() {
+            const outputDiv = document.getElementById("output");
+            const text = outputDiv.textContent;
+
+            // Create a temporary textarea element to copy text
+            const tempTextarea = document.createElement("textarea");
+            tempTextarea.value = text;
+            document.body.appendChild(tempTextarea);
+            tempTextarea.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempTextarea);
+
+            alert("Text copied to clipboard!");
+        }
+    </script>
+</body>
+</html>
