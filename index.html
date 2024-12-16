@@ -47,10 +47,20 @@
         .copy-button:hover {
             background-color: #0056b3;
         }
+        .note-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .note-container textarea {
+            flex: 1;
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
     <h1>Job Post Generator</h1>
+
     <label for="company">Company Name:</label>
     <input type="text" id="company" placeholder="Enter company name">
 
@@ -63,6 +73,13 @@
     <label for="applyLink">Apply Link:</label>
     <input type="url" id="applyLink" placeholder="Enter apply link">
 
+    <div class="note-container">
+        <label>
+            <input type="checkbox" id="addNoteCheckbox" onclick="toggleNoteField()"> Add Note
+        </label>
+        <textarea id="note" placeholder="Enter additional note" style="display: none;"></textarea>
+    </div>
+
     <button onclick="generatePost()">Generate Post</button>
     <button class="copy-button" onclick="copyToClipboard()">Copy</button>
 
@@ -71,13 +88,21 @@
     </div>
 
     <script>
+        function toggleNoteField() {
+            const noteField = document.getElementById("note");
+            const checkbox = document.getElementById("addNoteCheckbox");
+            noteField.style.display = checkbox.checked ? "block" : "none";
+        }
+
         function generatePost() {
             const company = document.getElementById("company").value;
             const jobTitle = document.getElementById("jobTitle").value;
             const batch = document.getElementById("batch").value;
             const applyLink = document.getElementById("applyLink").value;
+            const noteCheckbox = document.getElementById("addNoteCheckbox").checked;
+            const note = noteCheckbox ? document.getElementById("note").value : "";
 
-            const post = `*Company*: ${company}
+            let post = `*Company*: ${company}
 
 🛄 *Job Title*: ${jobTitle}
 
@@ -85,13 +110,13 @@
 
 ➡ *Apply*: ${applyLink}
 
-🔊 *WhatsApp Channel*: https://whatsapp.com/channel/0029VaITGBX3AzNRgmw8YF3T
+🔊 *WhatsApp Channel*: https://whatsapp.com/channel/0029VaITGBX3AzNRgmw8YF3T`;
 
-> Please do share in your college groups. In case you are applying, please react to this post 😇❤
+            if (noteCheckbox && note) {
+                post += `\n\n📝 *Note*: ${note}`;
+            }
 
-╭════════✧═════════╮
- 🔷  Kowshiq's Community 🔶
-╰════════✧═════════╯`;
+            post += `\n\n> Please do share in your college groups. In case you are applying, please react to this post 😇❤\n\n╭════════✧═════════╮\n 🔷  Kowshiq's Community 🔶\n╰════════✧═════════╯`;
 
             document.getElementById("output").textContent = post;
         }
